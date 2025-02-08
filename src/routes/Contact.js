@@ -8,7 +8,6 @@ const Contact = () => {
       <Navbar />
       {
         <section style={{ position: "relative", top: "5em" }}>
-
           <div class="container">
             <div class="row">
               <div className='col-md-6'></div>

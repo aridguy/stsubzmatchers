@@ -86,3 +86,6 @@ body {
   height: 400px;
 }
 
+.cursor{
+  cursor: pointer;
+}
