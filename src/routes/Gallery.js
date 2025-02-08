@@ -106,6 +106,8 @@ const Gallery = () => {
                           width="305px"
                           height="350em"
                           className="prac-image "
+                          loading='lazy'
+                          
                           src={
                             item?.fields?.modelImage?.fields?.file?.url ||
                             "https://via.placeholder.com/150"
