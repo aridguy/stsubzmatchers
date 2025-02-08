@@ -76,7 +76,7 @@ const Gallery = () => {
             <div className='col-md-1'></div>
             <div className="col-md-10">
               {loading ? (
-                <p className="text-white text-center">Loading images, please wait...</p>
+                <p className="text-white text-center">Loading models, please wait while we load the gurls...</p>
               ) : models.length > 0 ? (
                 <Carousel
                   swipeable

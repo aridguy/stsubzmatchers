@@ -6,7 +6,7 @@ const NoPage = () => {
   return (
     <div>
       page your looking for is not found
-      <button onClick={Navigate("/")} className='btm btn-warning'>Go back home</button>
+      <button onClick={Navigate("/home")} className='btm btn-warning'>Go back home</button>
     </div>
   )
 }

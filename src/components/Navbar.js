@@ -13,10 +13,9 @@ const Navbar = () => {
               </div>
               <div className="col-xs-12 text-center menu-1 menu-wrap">
                 <ul>
-                  <li className="active"><a href="index.html">Home</a></li>
-
+                  <li className="active"><a href="/">Home</a></li>
                   <li className="">
-                    <a href="gallery.html">gallery</a>
+                    <a href="gallery">gallery</a>
                   </li>
                   <li><a href="/payment">Payment</a></li>
                   <li><a href="/faq">FAQ</a></li>
