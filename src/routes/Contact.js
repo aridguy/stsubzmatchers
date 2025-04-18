@@ -1,42 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Loader from '../components/Loader' // Don't forget this import!
 
 const Contact = () => {
+  const [delayed, setDelayed] = useState(true)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDelayed(false)
+      setLoading(false) // You can set this based on real async tasks if needed
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (delayed || loading) return <Loader message="Loading Contact Page, please wait..." />
+
   return (
     <div>
       <Navbar />
       {
         <section style={{ position: "relative", top: "5em" }}>
-          <div class="container">
-            <div class="row">
+          <div className="container">
+            <div className="row">
               <div className='col-md-6'></div>
               <div className='col-md-6'>
                 <form action="https://formspree.io/f/xeqwwpra" method="POST" id="form-wrap">
-                  <div class="row form-group">
-                    <div class="col-md-12">
-                      <label for="name">Your Name</label>
-                      <input type="text" class="form-control" id="name" name="name" />
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <label htmlFor="name">Your Name</label>
+                      <input type="text" className="form-control" id="name" name="name" />
                     </div>
                   </div>
-                  <div class="row form-group">
-                    <div class="col-md-12">
-                      <label for="email">Your Email</label>
-                      <input type="text" class="form-control" id="email" name="email" />
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <label htmlFor="email">Your Email</label>
+                      <input type="text" className="form-control" id="email" name="email" />
                     </div>
                   </div>
-                  <div class="row form-group">
-                    <div class="col-md-12">
-                      <label for="message">Your Message</label>
-                      <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <label htmlFor="message">Your Message</label>
+                      <textarea name="message" id="message" cols="30" rows="10" className="form-control"></textarea>
                     </div>
                   </div>
-                  <div class="row form-group">
-                    <div class="col-md-12">
-                      <input type="submit" class="btn btn-primary btn-outline btn-lg" value="Submit Form" />
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <input type="submit" className="btn btn-primary btn-outline btn-lg" value="Submit Form" />
                     </div>
                   </div>
-
                 </form>
               </div>
             </div>

@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Loader from '../components/Loader' // ✅ Import Loader
 
 const Faq = () => {
+  const [delayed, setDelayed] = useState(true)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDelayed(false)
+      setLoading(false)
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (delayed || loading) return <Loader message="Loading FAQs..." />
+
   return (
     <div>
       <Navbar />
 
-      {
-        /* FAQ Section */
-        <main style={{ position: "relative", top: "5em" }}>
+      {/* FAQ Section */}
+      <main style={{ position: "relative", top: "5em" }}>
         <section className="mt-5">
           <div className="container">
-         
             <div className="row">
               <div className="col-md-3"></div>
               <div className="col-md-6">
-              <h2 className='text-white '>See frequently ask Questions</h2>
+                <h2 className='text-white'>See frequently asked Questions</h2>
                 <div className="faq-container">
                   <details className="faq-item">
                     <summary>Where would my girl be delivered to?</summary>
@@ -72,29 +84,29 @@ const Faq = () => {
             </div>
           </div>
         </section>
-      
+
         {/* Styles */}
         <style jsx>{`
           .faq-item {
             padding: 10px 0;
             border-bottom: 1px solid #ddd;
           }
-      
+
           summary {
             font-weight: bold;
             cursor: pointer;
             padding: 10px 0;
             list-style: none;
           }
-      
+
           summary::marker {
             display: none;
           }
-      
+
           summary:hover {
             color: #007bff;
           }
-      
+
           p {
             margin-top: 10px;
             padding-left: 10px;
@@ -102,7 +114,6 @@ const Faq = () => {
         `}</style>
       </main>
 
-      }
       <Footer />
     </div>
   )

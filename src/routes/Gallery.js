@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { createClient } from 'contentful';
 import Swal from 'sweetalert2';
+import Loader from '../components/Loader';
 
 // Initialize Contentful Client
 const clientModels = createClient({
@@ -55,92 +56,104 @@ const Gallery = () => {
     },
   };
 
+  const [delayed, setDelayed] = useState(true); // Delay flag
+
+  // Simulate 2.5s initial loading delay
+  useEffect(() => {
+    const timer = setTimeout(() => setDelayed(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
+  if (delayed || loading) return <Loader message="Loading gallery, please wait..." />;
+
+
   return (
-    <div>
-      <Navbar />
+    <main>
+   
+      <div>
+        <Navbar />
 
-      <section className="mt-4">
-        <div className="container">
-          <div className="row">
-            <h1 className="galHead text-white text-center">See Our Gallery</h1>
+        <section className="mt-4">
+          <div className="container">
+            <div className="row">
+              <h1 className="galHead text-white text-center">See Our Gallery</h1>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mt-4">
-        <div className="container">
-          <div className="row">
-            <h1 className="galHead text-white text-center">Our Models</h1>
-          </div>
-          <div className="row justify-content-center">
-            <div className='col-md-1'></div>
-            <div className="col-md-10">
-              {loading ? (
-                <p className="text-white text-center">Loading models, please wait while we load the gurls...</p>
-              ) : models.length > 0 ? (
-                <Carousel
-                  swipeable
-                  draggable
-                  showDots
-                  responsive={responsive}
-                  ssr // Server-side rendering
-                  infinite
-                  autoPlay
-                  autoPlaySpeed={3000}
-                  keyBoardControl
-                  customTransition="all .5"
-                  transitionDuration={500}
-                  containerclassName="carousel-container"
-                  removeArrowOnDeviceType={['tablet', 'mobile']}
-                  dotListclassName="custom-dot-list-style"
-                  itemclassName="carousel-item-padding-40-px"
-                >
-                  {models.map((item) => (
-                    <div
-                      key={item.sys.id}
-                      className="card  card-spacing"
-                      style={{ marginBottom: "20px", width: "17em", height: "30em", background: "#000000", display: "flex", gap: "4" }} // Add spacing between cards
-                    >
-                      <div className="prac-card ">
-                        <img
-                          width="305px"
-                          height="350em"
-                          className="prac-image "
-                          loading='lazy'
-                          
-                          src={
-                            item?.fields?.modelImage?.fields?.file?.url ||
-                            "https://via.placeholder.com/150"
-                          }
-                          alt={item?.fields?.modelCode || "Default Model"}
-                        />
-                        <div style={{ padding: "1em", color: "white" }} className="mt-2">
-                          <small className="text-black lead fw-bold text-uppercase">
-                            Model Code: {item?.fields?.modelCode || "N/A"}
-                          </small>
-                          <br />
-                          <small>Age: {item?.fields?.modelAge || "Unknown"}</small>
-                          <br />
-                          <small>Height: {item?.fields?.modelHeight || "N/A"} cm</small>
-                          <br />
-                          <div className="d-flex justify-content-between align-items-center mt-2">
-                            <button
-                              className="text-white fw-bold"
-                              style={{
-                                border: "none",
-                                background: "#228b22",
-                                padding: "0.7em 1em",
-                                borderRadius: "7px",
-                                cursor: "pointer",
-                              }}
-                              onClick={() =>
-                                Swal.fire({
-                                  title: `<h3 style="color: #fff;">${item?.fields?.modelCode || "N/A"}</h3>`,
-                                  html: `
+        <section className="mt-4">
+          <div className="container">
+            <div className="row">
+              <h1 className="galHead text-white text-center">Our Models</h1>
+            </div>
+            <div className="row justify-content-center">
+              <div className='col-md-1'></div>
+              <div className="col-md-10">
+                {loading ? (
+                  <p className="text-white text-center">Loading models, please wait while we load the gurls...</p>
+                ) : models.length > 0 ? (
+                  <Carousel
+                    swipeable
+                    draggable
+                    showDots
+                    responsive={responsive}
+                    ssr // Server-side rendering
+                    infinite
+                    autoPlay
+                    autoPlaySpeed={3000}
+                    keyBoardControl
+                    customTransition="all .5"
+                    transitionDuration={500}
+                    containerclassName="carousel-container"
+                    removeArrowOnDeviceType={['tablet', 'mobile']}
+                    dotListclassName="custom-dot-list-style"
+                    itemclassName="carousel-item-padding-40-px"
+                  >
+                    {models.map((item) => (
+                      <div
+                        key={item.sys.id}
+                        className="card  card-spacing"
+                        style={{ marginBottom: "20px", width: "17em", height: "30em", background: "#000000", display: "flex", gap: "4" }} // Add spacing between cards
+                      >
+                        <div className="prac-card ">
+                          <img
+                            width="305px"
+                            height="350em"
+                            className="prac-image "
+                            loading='lazy'
+
+                            src={
+                              item?.fields?.modelImage?.fields?.file?.url ||
+                              "https://via.placeholder.com/150"
+                            }
+                            alt={item?.fields?.modelCode || "Default Model"}
+                          />
+                          <div style={{ padding: "1em", color: "white" }} className="mt-2">
+                            <small className="text-black lead fw-bold text-uppercase">
+                              Model Code: {item?.fields?.modelCode || "N/A"}
+                            </small>
+                            <br />
+                            <small>Age: {item?.fields?.modelAge || "Unknown"}</small>
+                            <br />
+                            <small>Height: {item?.fields?.modelHeight || "N/A"} cm</small>
+                            <br />
+                            <div className="d-flex justify-content-between align-items-center mt-2">
+                              <button
+                                className="text-white fw-bold"
+                                style={{
+                                  border: "none",
+                                  background: "#228b22",
+                                  padding: "0.7em 1em",
+                                  borderRadius: "7px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                  Swal.fire({
+                                    title: `<h3 style="color: #fff;">${item?.fields?.modelCode || "N/A"}</h3>`,
+                                    html: `
                   <div style="text-align: center;">
                     <img
                       src="${item?.fields?.modelImage?.fields?.file?.url ||
-                                    "https://via.placeholder.com/150"}"
+                                      "https://via.placeholder.com/150"}"
                       alt="${item?.fields?.modelCode || "Default Model"}"
                       style="width: 80%; height: auto; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);"
                     />
@@ -154,40 +167,41 @@ const Gallery = () => {
                     </p>
                   </div>
                 `,
-                                  background: "#222", // Dark background for the modal
-                                  color: "#fff", // Text color
-                                  confirmButtonColor: "#228b22", // Green confirm button
-                                  confirmButtonText: "Close",
-                                  customClass: {
-                                    popup: "swal2-popup-custom", // Add a custom class if needed
-                                  },
-                                  width: "500px", // Adjust the modal width
-                                  padding: "20px", // Padding around the content
-                                  showCloseButton: true, // Add a close button at the top-right
-                                })
-                              }
-                            >
-                              Check Model Details
-                            </button>
+                                    background: "#222", // Dark background for the modal
+                                    color: "#fff", // Text color
+                                    confirmButtonColor: "#228b22", // Green confirm button
+                                    confirmButtonText: "Close",
+                                    customClass: {
+                                      popup: "swal2-popup-custom", // Add a custom class if needed
+                                    },
+                                    width: "500px", // Adjust the modal width
+                                    padding: "20px", // Padding around the content
+                                    showCloseButton: true, // Add a close button at the top-right
+                                  })
+                                }
+                              >
+                                Check Model Details
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </Carousel>
-              ) : (
-                <p className="text-white text-center">
-                  No models found in the gallery.
-                </p>
-              )}
+                    ))}
+                  </Carousel>
+                ) : (
+                  <p className="text-white text-center">
+                    No models found in the gallery.
+                  </p>
+                )}
+              </div>
+              <div className='col-md-1'></div>
             </div>
-            <div className='col-md-1'></div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </main>
   );
 };
 
